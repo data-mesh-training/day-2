@@ -32,6 +32,6 @@ SLOs:
   - name: freshness
     delivery_guarantee: "30 9 * * 3"
   - name: distribution
-    column: country
+    column: article_group
     valid_values: "[shoes, suits, sweaters, trousers, shirts, skirts, socks, dresses, accessoirs]"
 execution_logic: "loaded from source system"

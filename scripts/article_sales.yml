@@ -1,0 +1,36 @@
+data_product_name: article_sales
+owner:
+    team: team-reporting
+    domain: c-level-reporting
+stakeholders:
+  - team: c-level
+description: ""
+input_ports:
+  - data_product_name: order_positions
+  - data_product_name: articles
+output_port:
+  type: RDBMS
+  address: dwh.article_sales
+schema:
+  - name: order_line_id
+    type: int
+  - name: article_id
+    type: int
+  - name: article_name
+    type: string
+  - name: article_group
+    type: string
+  - name: sales_price
+    type: decimal(35,2)
+sensitivity_tags:
+  - column_name: sales_price
+    tag: insider
+SLOs:
+  - name: completeness
+    expression: row_count > 10000
+  - name: freshness
+    delivery_guarantee: "30 11 * * 4"
+  - name: distribution
+    column: article_group
+    valid_values: "[shoes, suits, sweaters, trousers, shirts, skirts, socks, dresses, accessoirs]"
+execution_logic: "SELECT op.order_line_id, a.article_id, a.article_name, a.article_group, op.sales_price FROM dwh.order_positions as a, dwh.articles as a WHERE op.article_id = a.article_id"
