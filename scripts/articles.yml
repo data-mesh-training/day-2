@@ -1,0 +1,37 @@
+data_product_name: articles
+owner:
+    team: team-article
+    domain: product
+stakeholders:
+  - team: none
+description: "The articles dataset contains all information about articles sold on our platform. The article_id uniquely identifies each article. It is followed by an article name, an article description that further describes the article, an article group that allows to aggregate by category, and the color of the article. Lastly it contains the listed price that the article is shown for in the shop before any discounts."
+input_ports:
+  - data_product_name: none
+output_port:
+  type: RDBMS
+  address: dwh.articles
+schema:
+  - name: article_id
+    type: int
+  - name: article_name
+    type: string
+  - name: article_desc
+    type: string
+  - name: article_group
+    type: string
+  - name: color
+    type: string
+  - name: listed_price
+    type: decimal(35,2)
+sensitivity_tags:
+  - column_name: listed_price
+    tag: insider
+SLOs:
+  - name: completeness
+    expression: row_count >= 100
+  - name: freshness
+    delivery_guarantee: "30 9 * * 3"
+  - name: distribution
+    column: country
+    valid_values: "[shoes, suits, sweaters, trousers, shirts, skirts, socks, dresses, accessoirs]"
+execution_logic: "loaded from source system"

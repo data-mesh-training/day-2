@@ -1,0 +1,37 @@
+data_product_name: order_positions
+owner:
+    team: team-orders
+    domain: sales
+stakeholders:
+  - team: none
+description: "The Order_positions dataset contains all information related to the sales made through our platform. For each order placed by our customers multiple records are created that each represent one item bought within that order. A single record can always be identified by its order_line_id the concatenated ID of the order number and the line number, its position within that order. Please note, if all content of an order is returned by the customer, a reference to the order is kept through a record with the order_id, but empty remaining attributes.
+For each ordered item you will find additional information about the article_id of the bought article, the order_date when the article was bought, and the country from which the order was placed. Please note, the upstream service that provides this information is not fully reliable which can lead to empty order_date values even for parts of the same order.
+The sales_price represents the actual sales value after applying discounts and before taxes."
+input_ports:
+  - data_product_name: none
+output_port:
+  type: RDBMS
+  address: dwh.order_positions
+schema:
+  - name: order_line_id
+    type: int
+  - name: article_id
+    type: int
+  - name: order_date
+    type: string
+  - name: country
+    type: string
+  - name: sales_price
+    type: decimal(35,2)
+sensitivity_tags:
+  - column_name: sales_price
+    tag: insider
+SLOs:
+  - name: completeness
+    expression: row_count > 10000
+  - name: freshness
+    delivery_guarantee: "0 10 * * 4"
+  - name: distribution
+    column: country
+    valid_values: "[DE, AT, CH, BE, NL, FR, EN, DK, FI, IT, PL, PT, ES, SE, NO]"
+execution_logic: "loaded from source system"
