@@ -4,7 +4,7 @@ owner:
     domain: c-level-reporting
 stakeholders:
   - team: c-level
-description: ""
+description: "The article_sales data product has been built to support reporting on the sales performance of our articles. It is composed of information from the order_positions data product enriched with article information from the articles data product. It is designed to answer questions like 'What is our best selling article in a given month', or 'Which article group was sold the most in total?'"
 input_ports:
   - data_product_name: order_positions
   - data_product_name: articles
