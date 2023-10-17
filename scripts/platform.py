@@ -1,4 +1,4 @@
-import catalog_connection as catalog
+from catalog_connection import register_dp
 
 def create_dp(dp_spec):
     catalog.register_dp(dp_spec)
