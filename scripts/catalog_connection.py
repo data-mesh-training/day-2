@@ -7,13 +7,11 @@ data = {
     "description": "test42",
 }
 
-def register_dp(dp_spec_yaml):
-    dp_spec_json = json.dumps(yaml.safe_load(dp_spec_yaml))
-
+def register_dp(dp_spec_dict):
     headers = {
         "Content-Type": "application/json"
     }
-    response = requests.post('https://data-product-catalog.onrender.com/register', headers=headers, data=dp_spec_json)
+    response = requests.post('https://data-product-catalog.onrender.com/register', headers=headers, json=dp_spec_dict)
 
     print(response.json())
 
