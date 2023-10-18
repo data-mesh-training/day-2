@@ -28,6 +28,15 @@ def check_for_basics(dp_spec_dict):
     if not has(dp_spec_dict["owner"], "team"):
         print("Please name an owning team for your data product.")
         return False
+    if not has(dp_spec_dict, "schema"):
+        print("Please specify a schema for your data product.")
+        return False
+    if not has(dp_spec_dict["schema"][0], "name"):
+        print("Please specify a name for each column.")
+        return False
+    if not has(dp_spec_dict["schema"][0], "type"):
+        print("Please specify a type for each column.")
+        return False
 
     return True
 
@@ -41,5 +50,10 @@ if __name__ == '__main__':
         "stakeholders": [
             { "team": "team-y"}
         ],
-        "description": "dataset description abc"
-    }, False)
+        "description": "dataset description abc",
+        "schema": [
+        {
+            "name": "order_id",
+            "type": "string"
+        }
+        ]}, False)
