@@ -22,6 +22,9 @@ def create_dp(dp_spec_dict, use_alt_service = False):
         register_dp(dp_spec_dict, use_alt_service)
         print("Data product created successfully!")
 
+def find_dp(domain, data_product_name):
+    return True
+
 def check_for_basics(dp_spec_dict):
     if not has(dp_spec_dict, "data_product_name"):
         print("Please provide a name for your data product.")
@@ -49,6 +52,9 @@ def check_for_basics(dp_spec_dict):
 
 def check_full(dp_spec_dict):
     if not check_for_basics(dp_spec_dict):
+        return False
+    if not has(dp_spec_dict["owner"], "domain"):
+        print("Please specify to which domain your data product belongs.")
         return False
     if not has(dp_spec_dict, "stakeholders"):
         print("Please specify the stakeholders of your data product.")
