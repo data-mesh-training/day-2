@@ -2,7 +2,7 @@ from catalog_connection import register_dp
 from utils import has
 from time import sleep
 
-def register_dp(dp_spec_dict, use_alt_service = False):
+def register_dp_in_catalog(dp_spec_dict, use_alt_service = False):
     print("Checking global policies..."); sleep(1)
     if check_for_basics(dp_spec_dict):
         print("Checks succeeded, publishing data product to catalog..."); sleep(0.5)
