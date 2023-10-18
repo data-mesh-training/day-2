@@ -1,4 +1,5 @@
 from catalog_connection import register_dp
+from utils import has
 from time import sleep
 
 def create_dp(dp_spec_dict, use_alt_service = False):
@@ -14,9 +15,6 @@ def create_dp(dp_spec_dict, use_alt_service = False):
         register_dp(dp_spec_dict, use_alt_service)
         print("Data product created successfully!")
 
-def has(dict, key):
-    return key in dict and dict[key] is not None and dict[key] != ""
-
 def check_for_basics(dp_spec_dict):
     if not has(dp_spec_dict, "data_product_name"):
         print("Please provide a name for your data product.")
@@ -25,7 +23,10 @@ def check_for_basics(dp_spec_dict):
         print("Please provide a description for your data product.")
         return False
     if not has(dp_spec_dict, "owner"):
-        print("Please provide an owner for your data product.")
+        print("Please specify who owns your data product.")
+        return False
+    if not has(dp_spec_dict["owner"], "team"):
+        print("Please name an owning team for your data product.")
         return False
 
     return True
