@@ -2,9 +2,16 @@ from catalog_connection import register_dp
 from utils import has
 from time import sleep
 
-def create_dp(dp_spec_dict, use_alt_service = False):
+def register_dp(dp_spec_dict, use_alt_service = False):
     print("Checking global policies..."); sleep(1)
     if check_for_basics(dp_spec_dict):
+        print("Checks succeeded, publishing data product to catalog..."); sleep(0.5)
+        register_dp(dp_spec_dict, use_alt_service)
+        print("Data product registered successfully!")
+
+def create_dp(dp_spec_dict, use_alt_service = False):
+    print("Checking global policies..."); sleep(1)
+    if check_full(dp_spec_dict):
         print("Checks succeeded, initializing infrastructure..."); sleep(0.5)
         print("Creating GitHub repository..."); sleep(1)
         print("Creating Airflow instance..."); sleep(1)
@@ -36,6 +43,36 @@ def check_for_basics(dp_spec_dict):
         return False
     if not has(dp_spec_dict["schema"][0], "type"):
         print("Please specify a type for each column.")
+        return False
+
+    return True
+
+def check_full(dp_spec_dict):
+    if not check_for_basics(dp_spec_dict):
+        return False
+    if not has(dp_spec_dict, "stakeholders"):
+        print("Please specify the stakeholders of your data product.")
+        return False
+    if not has(dp_spec_dict["stakeholders"][0], "team"):
+        print("Please name at least one stakeholder team.")
+        return False
+    if not has(dp_spec_dict, "sensitivity_tags"):
+        print("Please specify the sensitivity of the data you are serving.")
+        return False
+    if not has(dp_spec_dict["sensitivity_tags"][0], "column_name"):
+        print("Please specify each column containing sensitive data.")
+        return False
+    if not has(dp_spec_dict["sensitivity_tags"][0], "tag"):
+        print("Please specify the kind of sensitivity for each sensitive column.")
+        return False
+    if not has(dp_spec_dict, "service_level_objectives"):
+        print("Please specify at least one SLO for the data you are serving.")
+        return False
+    if not has(dp_spec_dict["service_level_objectives"][0], "type"):
+        print("Please specify the kind of SLO.")
+        return False
+    if not has(dp_spec_dict["service_level_objectives"][0], "expression"):
+        print("Please specify how the SLO can be expressed in an automatable form.")
         return False
 
     return True
