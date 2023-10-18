@@ -7,7 +7,7 @@ data = {
     "description": "test42",
 }
 
-def register_dp(dp_spec_dict):
+def register_dp(dp_spec_dict, use_alt_service = False):
     headers = {
         "Content-Type": "application/json"
     }
