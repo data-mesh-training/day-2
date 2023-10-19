@@ -25,7 +25,7 @@ def lookup_dp(domain, dp_name, use_alt_service = False):
 
 def lookup_dp_by_id(id, use_alt_service = False):
     url = service_url if not use_alt_service else alt_service_url
-    response = requests.get(url + "/product/" + id)
+    response = requests.get(url + "/product/" + str(id))
     return response.json() if response.text else None
 
 if __name__ == '__main__':
