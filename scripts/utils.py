@@ -7,7 +7,7 @@ def print_yaml(dict):
 def has(dict, key):
     return key in dict and dict[key] is not None and dict[key] != "" and dict[key] != [] and dict[key] != {}
 
-def make_request(url, payload, is_dict = True):
+def post_request(url, payload, is_dict = True):
     headers = {
         "Content-Type": "application/json"
     }

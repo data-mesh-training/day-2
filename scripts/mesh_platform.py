@@ -1,6 +1,9 @@
 from catalog_connection import register_dp
+from catalog_connection import lookup_dp
 from utils import has
+from utils import print_yaml
 from time import sleep
+import yaml
 
 def register_dp_in_catalog(dp_spec_dict, use_alt_service = False):
     print("Checking global policies..."); sleep(1)
@@ -15,7 +18,7 @@ def create_dp(dp_spec_dict, use_alt_service = False):
         print("Checks succeeded, initializing infrastructure..."); sleep(0.5)
         print("Creating GitHub repository..."); sleep(1)
         print("Creating Airflow instance..."); sleep(1)
-        print("Creating Spark cluster..."); sleep(1)
+        print("Assigning Spark cluster..."); sleep(1)
         print("Creating Kibana dashboard..."); sleep(0.5)
         print("Granting access roles to team members..."); sleep(0.5)
         print("Publishing data product to catalog..."); sleep(0.5)
@@ -23,6 +26,12 @@ def create_dp(dp_spec_dict, use_alt_service = False):
         print("Data product created successfully!")
 
 def find_dp(domain, data_product_name):
+    dp = lookup_dp(domain, data_product_name)
+    if dp is None:
+        print("No data product found for domain " + domain + " and name " + data_product_name)
+    else:
+        print("Data product found:")
+        print_yaml(dp)
     return True
 
 def check_for_basics(dp_spec_dict):
@@ -83,20 +92,15 @@ def check_full(dp_spec_dict):
 
     return True
 
+
+
+
+
+
+def create_dp_from_file(dp_spec_yaml_path, use_alt_service = False):
+    with open(dp_spec_yaml_path, 'r') as dp_spec_yaml:
+        dp_spec_dict = yaml.safe_load(dp_spec_yaml)
+        create_dp(dp_spec_dict, use_alt_service)
+
 if __name__ == '__main__':
-    create_dp({
-        "data_product_name": "sales_order",
-        "owner": {
-            "team": "team-x",
-            "domain": "domain-z"
-        },
-        "stakeholders": [
-            { "team": "team-y"}
-        ],
-        "description": "dataset description abc",
-        "schema": [
-        {
-            "name": "order_id",
-            "type": "string"
-        }
-        ]}, False)
+    create_dp_from_file("dp_template.yml")
