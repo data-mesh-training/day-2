@@ -116,5 +116,5 @@ def create_dp_from_file(dp_spec_yaml_path, use_alt_service = False):
         create_dp(dp_spec_dict, use_alt_service)
 
 if __name__ == '__main__':
-    create_dp_from_file("order_positions.yml", True)
-    find_dp("sales", "order_positions", True)
+    create_dp_from_file("order_positions.yml" )
+    find_dp("sales", "order_positions" )
