@@ -1,5 +1,6 @@
 from catalog_connection import register_dp
 from catalog_connection import lookup_dp
+from catalog_connection import lookup_dp_by_id
 from utils import has
 from utils import print_yaml
 from time import sleep
@@ -38,7 +39,17 @@ def find_dp(domain, data_product_name):
     if dp is None:
         print("No data product found for domain " + domain + " and name " + data_product_name)
     else:
-        print("Data product found:")
+        print("Data product found!")
+        print("---------------------------------")
+        print_yaml(dp)
+
+def find_dp_by_id(id):
+    dp = lookup_dp_by_id(id)
+    if dp is None:
+        print("No data product found for id " + id)
+    else:
+        print("Data product found!")
+        print("---------------------------------")
         print_yaml(dp)
 
 def check_for_basics(dp_spec_dict):
