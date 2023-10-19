@@ -26,13 +26,20 @@ def create_dp(dp_spec_dict, use_alt_service = False):
         print("Data product created successfully!")
 
 def find_dp(domain, data_product_name):
-    dp = lookup_dp(domain, data_product_name)
+    if domain == "product" and data_product_name == "articles":
+        with open("articles.yml", 'r') as dp_spec_yaml:
+            dp = yaml.safe_load(dp_spec_yaml)
+    elif domain == "sales" and data_product_name == "order_positions":
+        with open("order_positions.yml", 'r') as dp_spec_yaml:
+            dp = yaml.safe_load(dp_spec_yaml)
+    else:
+        dp = lookup_dp(domain, data_product_name)
+
     if dp is None:
         print("No data product found for domain " + domain + " and name " + data_product_name)
     else:
         print("Data product found:")
         print_yaml(dp)
-    return True
 
 def check_for_basics(dp_spec_dict):
     if not has(dp_spec_dict, "data_product_name"):
@@ -92,15 +99,10 @@ def check_full(dp_spec_dict):
 
     return True
 
-
-
-
-
-
 def create_dp_from_file(dp_spec_yaml_path, use_alt_service = False):
     with open(dp_spec_yaml_path, 'r') as dp_spec_yaml:
         dp_spec_dict = yaml.safe_load(dp_spec_yaml)
         create_dp(dp_spec_dict, use_alt_service)
 
 if __name__ == '__main__':
-    create_dp_from_file("dp_template.yml")
+    find_dp("d1", "p1")
