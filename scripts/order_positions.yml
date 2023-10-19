@@ -11,7 +11,7 @@ input_ports:
   - data_product_name: none
 output_port:
   type: RDBMS
-  address: dwh.order_positions
+  uri: dwh.order_positions
 schema:
   - name: order_line_id
     type: int
@@ -26,12 +26,11 @@ schema:
 sensitivity_tags:
   - column_name: sales_price
     tag: insider
-SLOs:
-  - name: completeness
+service_level_objectives:
+  - type: completeness
     expression: row_count > 10000
-  - name: freshness
-    delivery_guarantee: "0 10 * * 4"
-  - name: distribution
-    column: country
-    valid_values: "[DE, AT, CH, BE, NL, FR, EN, DK, FI, IT, PL, PT, ES, SE, NO]"
+  - type: freshness
+    expression: "0 10 * * 4"
+  - type: distribution
+    expression: country IN ("DE", "AT", "CH", "BE", "NL", "FR", "EN", "DK", "FI", "IT", "PL", "PT", "ES", "SE", "NO")
 execution_logic: "loaded from source system"

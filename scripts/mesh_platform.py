@@ -26,7 +26,7 @@ def create_dp(dp_spec_dict, use_alt_service = False):
         register_dp(dp_spec_dict, use_alt_service)
         print("Data product created successfully!")
 
-def find_dp(domain, data_product_name):
+def find_dp(domain, data_product_name, use_alt_service = False):
     if domain == "product" and data_product_name == "articles":
         with open("articles.yml", 'r') as dp_spec_yaml:
             dp = yaml.safe_load(dp_spec_yaml)
@@ -34,7 +34,7 @@ def find_dp(domain, data_product_name):
         with open("order_positions.yml", 'r') as dp_spec_yaml:
             dp = yaml.safe_load(dp_spec_yaml)
     else:
-        dp = lookup_dp(domain, data_product_name)
+        dp = lookup_dp(domain, data_product_name, use_alt_service)
 
     if dp is None:
         print("No data product found for domain " + domain + " and name " + data_product_name)
@@ -43,10 +43,10 @@ def find_dp(domain, data_product_name):
         print("---------------------------------")
         print_yaml(dp)
 
-def find_dp_by_id(id):
-    dp = lookup_dp_by_id(id)
+def find_dp_by_id(id, use_alt_service = False):
+    dp = lookup_dp_by_id(id, use_alt_service)
     if dp is None:
-        print("No data product found for id " + id)
+        print("No data product found for id " + str(id))
     else:
         print("Data product found!")
         print("---------------------------------")
@@ -116,4 +116,5 @@ def create_dp_from_file(dp_spec_yaml_path, use_alt_service = False):
         create_dp(dp_spec_dict, use_alt_service)
 
 if __name__ == '__main__':
-    find_dp("sales", "order_positions")
+    create_dp_from_file("order_positions.yml", True)
+    find_dp("sales", "order_positions", True)

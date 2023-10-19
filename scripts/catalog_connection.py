@@ -1,6 +1,5 @@
 import requests
 import yaml
-import json
 from utils import post_request
 from utils import print_yaml
 

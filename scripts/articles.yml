@@ -9,7 +9,7 @@ input_ports:
   - data_product_name: none
 output_port:
   type: RDBMS
-  address: dwh.articles
+  uri: dwh.articles
 schema:
   - name: article_id
     type: int
@@ -26,12 +26,11 @@ schema:
 sensitivity_tags:
   - column_name: listed_price
     tag: insider
-SLOs:
-  - name: completeness
+service_level_objectives:
+  - type: completeness
     expression: row_count >= 100
-  - name: freshness
-    delivery_guarantee: "30 9 * * 3"
-  - name: distribution
-    column: article_group
-    valid_values: "[shoes, suits, sweaters, trousers, shirts, skirts, socks, dresses, accessoirs]"
+  - type: freshness
+    expression: "30 9 * * 3"
+  - type: distribution
+    expression: article_group IN ("shoes", "suits", "sweaters", "trousers", "shirts", "skirts", "socks", "dresses", "accessoirs")
 execution_logic: "loaded from source system"
