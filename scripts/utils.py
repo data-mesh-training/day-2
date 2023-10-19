@@ -1,6 +1,6 @@
 import yaml
 import requests
-from collections import MutableMapping
+from collections.abc import MutableMapping
 from contextlib import suppress
 
 def delete_key_from_dict(dictionary, key):

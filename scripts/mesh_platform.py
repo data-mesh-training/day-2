@@ -105,4 +105,4 @@ def create_dp_from_file(dp_spec_yaml_path, use_alt_service = False):
         create_dp(dp_spec_dict, use_alt_service)
 
 if __name__ == '__main__':
-    find_dp("d1", "p1")
+    find_dp("sales", "order_positions")
